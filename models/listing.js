@@ -9,7 +9,7 @@ const listingSchema = new Schema({
     url: String
   },
   price: Number,
-  location: Stringg,
+  location: String,
   country: String
 });
 
