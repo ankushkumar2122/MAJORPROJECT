@@ -17,6 +17,7 @@
         </div>
         
         <div class="mb-3">
+<<<<<<< HEAD
             original Listing Image <br>
             <img src="<%= originalImageUrl %>" />
             
@@ -40,6 +41,30 @@
                 <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control" required>
                 <div class="invalid-feedback">Please enter a country name.</div>
             </div>
+=======
+            <label for="image" class="form-lebel">Image Link</label>
+            <input  name="listing[image]" value="<%= listing.image.url %>" class="form-control" required>
+            <div class="invalid-feedback">Please add image link  </div>
+        </div>
+        <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="price" class="form-lebel">Price</label>
+            <input type="number" name="listing[price]" value="<%= listing.price %>" class="form-control">
+            <div class="invalid-feedback">Please Enter a valid Price  </div>
+        </div>
+
+        <div class="mb-3 col-md-8">
+            <label for="country" class="form-lebel">Country</label>
+            <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control" required>
+            <div class="invalid-feedback">Please Enter a  Country name </div>
+        </div>
+      </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-lebel">Location</label>
+            <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control" required>
+            <div class="invalid-feedback">Please Enter a location name </div>
+>>>>>>> ef424c4 (database uri change)
         </div>
 
         <div class="mb-3">
@@ -53,3 +78,8 @@
 
     </div>
 </div>
+<<<<<<< HEAD
+=======
+<!-- <script src="/js/script.js"></script> -->
+
+>>>>>>> ef424c4 (database uri change)

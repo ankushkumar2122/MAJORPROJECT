@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 if(process.env.NODE_ENV !="production"){
     require('dotenv').config();
 }
@@ -6,6 +7,10 @@ if(process.env.NODE_ENV !="production"){
 
 const express = require("express");
 const app = express();
+=======
+const express = require('express');
+const app = express(); 
+>>>>>>> ef424c4 (database uri change)
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
@@ -15,14 +20,22 @@ const listingrouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const session = require("express-session");
+<<<<<<< HEAD
 const MongoStore = require('connect-mongo');
+=======
+>>>>>>> ef424c4 (database uri change)
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrtegy = require("passport-local");
 const user = require("./models/user.js");
+<<<<<<< HEAD
 const { error } = require('console');
 
 const dburl=process.env.ATLASDB_URL;
+=======
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
+>>>>>>> ef424c4 (database uri change)
 
 main().then(() => {
     console.log("connected to db");
@@ -41,6 +54,7 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+<<<<<<< HEAD
 
 const store=MongoStore.create({
     mongoUrl: dburl,
@@ -56,6 +70,10 @@ store.on("error",()=>{
 const sessionOption = {
     store,
     secret:  process.env.SECRET,
+=======
+const sessionOption = {
+    secret: "mysupersecretcode",
+>>>>>>> ef424c4 (database uri change)
     resave: false,
     saveUninitialized: true,
     Cookie: {
@@ -74,10 +92,33 @@ passport.use(new localStrtegy(user.authenticate()));
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 // basic api
+<<<<<<< HEAD
 // app.get("/", (req, res) => {
 //     res.send("hi i am root");
-// });
+=======
+app.get("/", (req, res) => {
+    res.send("hi i am root");
+});
 
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+    console.log(res.locals.success);
+    next();
+});
+// app.get("/demouser",async(req,res)=>{
+// let fakeUser=new user({
+//     email:"studentgmail.com",
+//     username:"student"
+>>>>>>> ef424c4 (database uri change)
+// });
+// let registerUser = await user.register(fakeUser,"helloworld");
+// res.send(registerUser);
+// })
+
+<<<<<<< HEAD
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
@@ -103,6 +144,16 @@ app.use("/", userRouter);
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "page not found"));
 });
+=======
+app.use("/listings", listingrouter); // This is correct
+app.use("/listings/:id/reviews", reviewRouter); // This is also correct
+app.use("/", userRouter);
+
+
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "page not found"));
+});
+>>>>>>> ef424c4 (database uri change)
 app.use((err, req, res, next) => {
     let { statuscode = 500, message = "Something went wrong!" } = err;
     // res.status(statuscode).send(message);

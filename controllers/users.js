@@ -1,5 +1,9 @@
+<<<<<<< HEAD
     const user = require("../models/user");
 
+=======
+const user = require("../models/user.js");
+>>>>>>> ef424c4 (database uri change)
 module.exports.renderSignupForm = (req, res) => {
     res.render("users/signup.ejs");
 };

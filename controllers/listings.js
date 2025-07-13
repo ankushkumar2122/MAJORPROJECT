@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 const Listing = require("../models/listing");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken=process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+=======
+const Listing = require('../models/listing');
+
+
+>>>>>>> ef424c4 (database uri change)
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
@@ -9,11 +15,17 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.renderNewForm = (req, res) => {
+<<<<<<< HEAD
+=======
+    // console.log(req.user);
+
+>>>>>>> ef424c4 (database uri change)
     res.render("listings/new.ejs");
 };
 
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
+<<<<<<< HEAD
     const listing = await Listing.findById(id)
         .populate({
             path: "reviews",
@@ -22,6 +34,13 @@ module.exports.showListing = async (req, res) => {
             },
         })
         .populate("owner");
+=======
+    const listing = await Listing.findById(id).populate({
+        path: "reviews", populate: {
+            path: "author",
+        },
+    }).populate("owner");
+>>>>>>> ef424c4 (database uri change)
     if (!listing) {
         req.flash("error", "listing you requested for does not exist!");
         res.redirect("/listings");
@@ -31,6 +50,7 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
+<<<<<<< HEAD
     let respose=await geocodingClient.forwardGeocode({
         query:req.body.listing.location,
         limit: 1,
@@ -54,6 +74,16 @@ module.exports.createListing = async (req, res, next) => {
     newListing.geometry= respose.body.features[0].geometry;
     let savedlisting=await newListing.save();
     console.log(savedlisting);
+=======
+    
+    let result = listingSchema.validate(req.body);
+    console.log(result);
+    
+    const newListing = new Listing(req.body.listing);
+    // console.log(req.user);
+    newListing.owner = req.user._id;
+    await newListing.save();
+>>>>>>> ef424c4 (database uri change)
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
 };
@@ -65,6 +95,7 @@ module.exports.renderEditForm = async (req, res) => {
         req.flash("error", "listing you requested for does not exist!");
         res.redirect("/listings");
     }
+<<<<<<< HEAD
     let originalImageUrl = listing.image.url;
     originalImageUrl=originalImageUrl.replace("/upload", "/upload/w_250");
     res.render("listings/edit.ejs", { listing, originalImageUrl });
@@ -82,6 +113,16 @@ module.exports.updateListing = async (req, res) => {
         listing.image = { url, filename };
         await listing.save();
     }
+=======
+    res.render("listings/edit.ejs", { listing });
+};
+module.exports.updateListing = async (req, res) => {
+    if (!req.body.listing) {
+        throw new ExpressError(400, "send valid data for listing");
+    }
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+>>>>>>> ef424c4 (database uri change)
     req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
 };
